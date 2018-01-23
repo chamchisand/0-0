@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  transmission-remote -l
+fi
+
+
+echo -n "Enter Torrent ID > "
+read id
+
+transmission-remote -t$id -Gall

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+file=$1
+
+if [ -z "$file" ] || [ ! -f "$file" ]; then
+  echo ERROR: File not found
+  exit 1
+fi
+
+filename=$(basename "$file")
+extension="${filename##*.}"
+filename="${filename%.*}"
+target="$downloads/$filename-1.$extension"
+
+echo "src=$src"
+echo "target=$target"
+
+ffmpeg -threads 4 -i "$src" -acodec aac -vcodec libx264 -b 2500k -preset slower -r 23.976 "$target"

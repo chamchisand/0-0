@@ -1,0 +1,15 @@
+#!/bin/bash
+
+case $1 in
+  1) amixer -q sset PCM 0 mute ;;
+  4) amixer -q sset PCM 1%+ unmute ;; # scroll up, increase
+  5) amixer -q sset PCM 1%- unmute ;; # scroll down, decrease
+esac
+
+output=$(amixer -D default get PCM 2>/dev/null)
+
+if [ -z "$output" ]; then
+  echo "no"
+else
+  echo $(echo "$output" | grep -Po '(\d+%)' | head -1)
+fi

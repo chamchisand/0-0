@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# TR_APP_VERSION
+# TR_TORRENT_DIR
+# TR_TORRENT_ID
+# TR_TORRENT_NAME
+
+if [ -z "$TR_TORRENT_ID" ]; then
+  exit
+fi
+
+transmission-remote -t $TR_TORRENT_ID --stop
+dir=/mnt/seagate/downloads
+cwd=$(dirname "$0")
+
+if [ -n "$TR_TORRENT_NAME" ] && [ -f "$dir/$TR_TORRENT_NAME" ]; then
+  name=$(echo "$TR_TORRENT_NAME" | sed 's/ //g')
+  mv "$dir/$TR_TORRENT_NAME" "$dir/$name" &>/dev/null
+  $cwd/tr-move "$dir/$name"
+fi
