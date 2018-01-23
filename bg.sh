@@ -5,6 +5,9 @@ mode=$2
 
 if [ -z "$img" ]; then
   img=--randomize ~/Pictures
+elif [ ! -f "$img" ]; then
+  echo ERROR: Invalid image path
+  exit 1
 fi
 
 line=$(file $img | grep -Po '\d+\s*x\s*\d+' | tail -1)
